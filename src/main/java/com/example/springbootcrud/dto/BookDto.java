@@ -8,4 +8,5 @@ public class BookDto {
     private String bookname;
     private String author;
     private int price;
+
 }
