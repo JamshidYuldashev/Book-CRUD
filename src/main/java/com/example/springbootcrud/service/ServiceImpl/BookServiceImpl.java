@@ -12,11 +12,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
 public class BookServiceImpl implements BooksService {
-
     @Autowired
     private BookRepository bookRepository;
     @Autowired
@@ -40,5 +41,18 @@ public class BookServiceImpl implements BooksService {
         bookRepository.save(bookEntity);
         BeanUtils.copyProperties(bookEntity, bookResponseDto);
         return ResponseEntity.ok(bookResponseDto);
+    }
+
+    @Override
+    public ResponseEntity<?> getAll() {
+        List<BookEntity> bookEntities = bookRepository.findAll();
+        List<BookResponseDto> responseDtos = new ArrayList<>();
+        bookEntities.forEach(bookEntity -> {
+            BookResponseDto dto = new BookResponseDto();
+            BeanUtils.copyProperties(bookEntity, dto);
+            responseDtos.add(dto);
+        });
+
+        return ResponseEntity.ok(responseDtos);
     }
 }

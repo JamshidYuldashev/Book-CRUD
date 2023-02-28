@@ -1,7 +1,6 @@
 package com.example.springbootcrud.dto;
 
 import lombok.Data;
-
 @Data
 public class BookResponseDto {
     private Long id;

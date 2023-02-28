@@ -6,4 +6,9 @@ import org.springframework.http.ResponseEntity;
 
 public interface AuthorService {
     AuthorResponseDto createAuthor(AuthorCreateDto dto);
+    ResponseEntity<?> getAll();
+
+    ResponseEntity<?> update(AuthorResponseDto responseDto);
+
+    ResponseEntity<?> delete(Long id);
 }
