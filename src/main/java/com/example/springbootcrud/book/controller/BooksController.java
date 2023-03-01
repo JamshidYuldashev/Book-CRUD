@@ -25,8 +25,4 @@ public class BooksController {
         return ResponseEntity.ok(booksService.delete(id));
     }
 
-    @PostMapping("/create")
-    public ResponseEntity<?> createBookAndAuthor(@RequestBody BookCreateDto dto){
-        return ResponseEntity.ok(booksService.createBookAndAuthor(dto));
-    }
 }

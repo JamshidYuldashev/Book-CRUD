@@ -38,6 +38,10 @@ public class AuthorController {
             @PathVariable Long authID,
             @PathVariable Long bookID
     ){
-        return ResponseEntity.ok(authorService.addManyToMany(authID, bookID));
+        return ResponseEntity.ok(authorService.addManyToMany(authID, bookID));}
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getAuthId(@PathVariable long id){
+        return ResponseEntity.ok(authorService.getAuthId(id));
     }
 }

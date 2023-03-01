@@ -4,7 +4,6 @@ import com.example.springbootcrud.Author.dto.AuthorResponseDto;
 import com.example.springbootcrud.Author.dto.createDto.AuthorCreateDto;
 import com.example.springbootcrud.Author.entity.AuthorEntity;
 import com.example.springbootcrud.Author.repository.AuhtorRepository;
-import com.example.springbootcrud.book.dto.BookResponseDto;
 import com.example.springbootcrud.book.entity.BookEntity;
 import com.example.springbootcrud.book.repository.BookRepository;
 import org.springframework.beans.BeanUtils;
@@ -13,7 +12,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class AuthorServiceImpl implements AuthorService {
@@ -66,7 +68,7 @@ public class AuthorServiceImpl implements AuthorService {
     public ResponseEntity<?> delete(Long id) {
         Optional<AuthorEntity> optional = auhtorRepository.findById(id);
         if (optional.isEmpty()){
-            return ResponseEntity.ok(new NullPointerException());
+            return ResponseEntity.ok("This User not found");
         }
         optional.get().setDeletedAt(true);
         optional.get().setDeleteDate(LocalDate.now());
@@ -94,5 +96,16 @@ public class AuthorServiceImpl implements AuthorService {
         BeanUtils.copyProperties(optionalAuthorEntity.get(), responseDto);
 
         return ResponseEntity.ok(responseDto);
+    }
+
+    @Override
+    public ResponseEntity<?> getAuthId(long id) {
+        Optional<AuthorEntity> optionalAuthorEntity = auhtorRepository.findById(id);
+        if (optionalAuthorEntity.isEmpty())
+            return ResponseEntity.ok("This User not found");
+        AuthorResponseDto authorResponseDto = new AuthorResponseDto();
+        BeanUtils.copyProperties(optionalAuthorEntity.get(), authorResponseDto);
+
+        return ResponseEntity.ok(authorResponseDto);
     }
 }

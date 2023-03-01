@@ -1,10 +1,9 @@
 package com.example.springbootcrud.book.service;
 
-import com.example.springbootcrud.book.dto.BookResponseDto;
-import com.example.springbootcrud.book.dto.BookCreateDto;
-import com.example.springbootcrud.Author.entity.AuthorEntity;
-import com.example.springbootcrud.book.entity.BookEntity;
 import com.example.springbootcrud.Author.repository.AuhtorRepository;
+import com.example.springbootcrud.book.dto.BookCreateDto;
+import com.example.springbootcrud.book.dto.BookResponseDto;
+import com.example.springbootcrud.book.entity.BookEntity;
 import com.example.springbootcrud.book.repository.BookRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,17 +69,5 @@ public class BookServiceImpl implements BooksService {
         optional.get().setDeleteDate(LocalDate.now());
         bookRepository.save(optional.get());
         return ResponseEntity.ok("Deleted id: " + id);
-    }
-
-    @Override
-    public ResponseEntity<?> createBookAndAuthor(BookCreateDto dto) {
-
-        BookEntity bookEntity = new BookEntity();
-        bookEntity.setBookName(dto.getBookName());
-        bookEntity.setPublish(dto.getPublish());
-        bookEntity.setPrice(dto.getPrice());
-        bookEntity.setDeletedAt(false);
-        AuthorEntity authorEntity = new AuthorEntity();
-        return null;
     }
 }

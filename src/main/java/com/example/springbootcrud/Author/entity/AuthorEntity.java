@@ -24,7 +24,7 @@ public class AuthorEntity {
     private Boolean deletedAt =false;
     private LocalDate deleteDate;
 
-    @ManyToMany   // employee
+    @ManyToMany
     @JoinTable(
             name = "book_author",
             joinColumns = @JoinColumn(name = "auhtor_id"),

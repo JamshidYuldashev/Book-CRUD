@@ -9,6 +9,4 @@ public interface BooksService {
     ResponseEntity<?> getAll();
 
     ResponseEntity<?> delete(long id);
-
-    ResponseEntity<?> createBookAndAuthor(BookCreateDto dto);
 }
