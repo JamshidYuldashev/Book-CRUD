@@ -1,12 +1,11 @@
-package com.example.springbootcrud.service.ServiceImpl;
+package com.example.springbootcrud.book.service;
 
-import com.example.springbootcrud.dto.BookResponseDto;
-import com.example.springbootcrud.dto.createDto.BookCreateDto;
-import com.example.springbootcrud.entity.AuthorEntity;
-import com.example.springbootcrud.entity.BookEntity;
-import com.example.springbootcrud.repository.AuhtorRepository;
-import com.example.springbootcrud.repository.BookRepository;
-import com.example.springbootcrud.service.BooksService;
+import com.example.springbootcrud.book.dto.BookResponseDto;
+import com.example.springbootcrud.book.dto.BookCreateDto;
+import com.example.springbootcrud.Author.entity.AuthorEntity;
+import com.example.springbootcrud.book.entity.BookEntity;
+import com.example.springbootcrud.Author.repository.AuhtorRepository;
+import com.example.springbootcrud.book.repository.BookRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -27,17 +26,17 @@ public class BookServiceImpl implements BooksService {
     @Override
     public ResponseEntity<?> createBook(BookCreateDto dto) {
         BookResponseDto bookResponseDto = new BookResponseDto();
-        Optional<AuthorEntity> optional = auhtorRepository.findById(dto.getAuthorId());
-        if (optional.isEmpty()){
-            return ResponseEntity.ok("This User not found!");
-        }
-        if (optional.get().getDeletedAt().equals(true)){
-            return ResponseEntity.ok("This Id: [" + dto.getAuthorId() +"] is disabled ");
-        }
+//        Optional<AuthorEntity> optional = auhtorRepository.findById(dto.getAuthorId());
+//        if (optional.isEmpty()){
+//            return ResponseEntity.ok("This User not found!");
+//        }
+//        if (optional.get().getDeletedAt().equals(true)){
+//            return ResponseEntity.ok("This Id: [" + dto.getAuthorId() +"] is disabled ");
+//        }
 
         BookEntity bookEntity = new BookEntity();
-        bookEntity.setAuthorEntity(optional.get());
-        bookEntity.setAuthorId(dto.getAuthorId());
+//        bookEntity.setAuthorEntity(optional.get());
+//        bookEntity.setAuthorId(dto.getAuthorId());
         bookEntity.setBookName(dto.getBookName());
         bookEntity.setPublish(dto.getPublish());
         bookEntity.setPrice(dto.getPrice());

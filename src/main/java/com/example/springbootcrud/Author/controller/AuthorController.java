@@ -1,8 +1,9 @@
-package com.example.springbootcrud.controller;
+package com.example.springbootcrud.Author.controller;
 
-import com.example.springbootcrud.dto.AuthorResponseDto;
-import com.example.springbootcrud.dto.createDto.AuthorCreateDto;
-import com.example.springbootcrud.service.AuthorService;
+import com.example.springbootcrud.Author.dto.AuthorResponseDto;
+import com.example.springbootcrud.Author.service.AuthorService;
+import com.example.springbootcrud.Author.dto.createDto.AuthorCreateDto;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.http.ResponseEntity;
@@ -26,11 +27,17 @@ public class AuthorController {
     public ResponseEntity<?> update(@RequestBody AuthorResponseDto responseDto){
         return ResponseEntity.ok(authorService.update(responseDto));
     }
-
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deteleAuthor(@PathVariable long id){
         return ResponseEntity.ok(authorService.delete(id));
     }
 
-
+    @JsonIgnore
+    @PutMapping(("/{authID}/book/{bookID}"))
+    public ResponseEntity<?>  addManyToMany(
+            @PathVariable Long authID,
+            @PathVariable Long bookID
+    ){
+        return ResponseEntity.ok(authorService.addManyToMany(authID, bookID));
+    }
 }

@@ -1,6 +1,6 @@
-package com.example.springbootcrud.repository;
+package com.example.springbootcrud.Author.repository;
 
-import com.example.springbootcrud.entity.AuthorEntity;
+import com.example.springbootcrud.Author.entity.AuthorEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

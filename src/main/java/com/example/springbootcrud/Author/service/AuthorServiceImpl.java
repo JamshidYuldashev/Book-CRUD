@@ -1,24 +1,27 @@
-package com.example.springbootcrud.service.ServiceImpl;
+package com.example.springbootcrud.Author.service;
 
-import com.example.springbootcrud.dto.AuthorResponseDto;
-import com.example.springbootcrud.dto.createDto.AuthorCreateDto;
-import com.example.springbootcrud.entity.AuthorEntity;
-import com.example.springbootcrud.repository.AuhtorRepository;
-import com.example.springbootcrud.service.AuthorService;
+import com.example.springbootcrud.Author.dto.AuthorResponseDto;
+import com.example.springbootcrud.Author.dto.createDto.AuthorCreateDto;
+import com.example.springbootcrud.Author.entity.AuthorEntity;
+import com.example.springbootcrud.Author.repository.AuhtorRepository;
+import com.example.springbootcrud.book.dto.BookResponseDto;
+import com.example.springbootcrud.book.entity.BookEntity;
+import com.example.springbootcrud.book.repository.BookRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class AuthorServiceImpl implements AuthorService {
     @Autowired
     private AuhtorRepository auhtorRepository;
+
+    @Autowired
+    private BookRepository bookRepository;
 
     @Override
     public AuthorResponseDto createAuthor(AuthorCreateDto dto) {
@@ -69,5 +72,27 @@ public class AuthorServiceImpl implements AuthorService {
         optional.get().setDeleteDate(LocalDate.now());
         auhtorRepository.save(optional.get());
         return ResponseEntity.ok("Deleted id: " + id);
+    }
+
+    @Override
+    public ResponseEntity<?> addManyToMany(Long authID, Long bookID) {
+        Set<BookEntity> bookEntitySet = null;
+        Optional<AuthorEntity> optionalAuthorEntity = auhtorRepository.findById(authID);
+        Optional<BookEntity> optionalBookEntity = bookRepository.findById(bookID);
+
+        if (optionalAuthorEntity.get().getDeletedAt().equals(false) &&
+                optionalBookEntity.get().getDeletedAt().equals(false)){
+
+            bookEntitySet = optionalAuthorEntity.get().getBookAuthor();
+            bookEntitySet.add(optionalBookEntity.get());
+
+
+            auhtorRepository.save(optionalAuthorEntity.get());
+        }
+
+        AuthorResponseDto responseDto = new AuthorResponseDto();
+        BeanUtils.copyProperties(optionalAuthorEntity.get(), responseDto);
+
+        return ResponseEntity.ok(responseDto);
     }
 }

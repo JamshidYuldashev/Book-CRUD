@@ -1,6 +1,6 @@
-package com.example.springbootcrud.service;
+package com.example.springbootcrud.book.service;
 
-import com.example.springbootcrud.dto.createDto.BookCreateDto;
+import com.example.springbootcrud.book.dto.BookCreateDto;
 import org.springframework.http.ResponseEntity;
 
 public interface BooksService {

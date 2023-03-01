@@ -1,4 +1,4 @@
-package com.example.springbootcrud.dto.createDto;
+package com.example.springbootcrud.Author.dto.createDto;
 
 import lombok.Data;
 

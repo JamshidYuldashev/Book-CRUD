@@ -1,10 +1,8 @@
-package com.example.springbootcrud.repository;
+package com.example.springbootcrud.book.repository;
 
-import com.example.springbootcrud.entity.BookEntity;
+import com.example.springbootcrud.book.entity.BookEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-
-import java.util.Optional;
 
 
 @Repository

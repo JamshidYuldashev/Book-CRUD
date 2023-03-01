@@ -1,7 +1,7 @@
-package com.example.springbootcrud.controller;
+package com.example.springbootcrud.book.controller;
 
-import com.example.springbootcrud.dto.createDto.BookCreateDto;
-import com.example.springbootcrud.service.BooksService;
+import com.example.springbootcrud.book.dto.BookCreateDto;
+import com.example.springbootcrud.book.service.BooksService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
