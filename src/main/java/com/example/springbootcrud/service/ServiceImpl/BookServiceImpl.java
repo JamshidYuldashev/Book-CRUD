@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -30,6 +31,9 @@ public class BookServiceImpl implements BooksService {
         if (optional.isEmpty()){
             return ResponseEntity.ok("This User not found!");
         }
+        if (optional.get().getDeletedAt().equals(true)){
+            return ResponseEntity.ok("This Id: [" + dto.getAuthorId() +"] is disabled ");
+        }
 
         BookEntity bookEntity = new BookEntity();
         bookEntity.setAuthorEntity(optional.get());
@@ -37,6 +41,7 @@ public class BookServiceImpl implements BooksService {
         bookEntity.setBookName(dto.getBookName());
         bookEntity.setPublish(dto.getPublish());
         bookEntity.setPrice(dto.getPrice());
+        bookEntity.setDeletedAt(false);
 
         bookRepository.save(bookEntity);
         BeanUtils.copyProperties(bookEntity, bookResponseDto);
@@ -49,10 +54,34 @@ public class BookServiceImpl implements BooksService {
         List<BookResponseDto> responseDtos = new ArrayList<>();
         bookEntities.forEach(bookEntity -> {
             BookResponseDto dto = new BookResponseDto();
-            BeanUtils.copyProperties(bookEntity, dto);
-            responseDtos.add(dto);
+            if (bookEntity.getDeletedAt().equals(false)){
+                BeanUtils.copyProperties(bookEntity, dto);
+                responseDtos.add(dto);
+            }
         });
-
         return ResponseEntity.ok(responseDtos);
+    }
+
+    @Override
+    public ResponseEntity<?> delete(long id) {
+        Optional<BookEntity> optional=bookRepository.findById(id);
+        if (optional.isEmpty())
+            return ResponseEntity.ok("This User not found!");
+        optional.get().setDeletedAt(true);
+        optional.get().setDeleteDate(LocalDate.now());
+        bookRepository.save(optional.get());
+        return ResponseEntity.ok("Deleted id: " + id);
+    }
+
+    @Override
+    public ResponseEntity<?> createBookAndAuthor(BookCreateDto dto) {
+
+        BookEntity bookEntity = new BookEntity();
+        bookEntity.setBookName(dto.getBookName());
+        bookEntity.setPublish(dto.getPublish());
+        bookEntity.setPrice(dto.getPrice());
+        bookEntity.setDeletedAt(false);
+        AuthorEntity authorEntity = new AuthorEntity();
+        return null;
     }
 }

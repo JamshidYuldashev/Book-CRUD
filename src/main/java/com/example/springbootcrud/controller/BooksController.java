@@ -19,4 +19,14 @@ public class BooksController {
     public ResponseEntity<?> getAll(){
         return ResponseEntity.ok(booksService.getAll());
     }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> deteleBook(@PathVariable long id){
+        return ResponseEntity.ok(booksService.delete(id));
+    }
+
+    @PostMapping("/create")
+    public ResponseEntity<?> createBookAndAuthor(@RequestBody BookCreateDto dto){
+        return ResponseEntity.ok(booksService.createBookAndAuthor(dto));
+    }
 }

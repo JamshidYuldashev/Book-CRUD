@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
 @Entity
 @Getter
@@ -19,6 +20,6 @@ public class AuthorEntity {
     private Set<BookEntity> bookEntities;
     private String country;
     private String authorName;
-    private Boolean delete=false;
+    private Boolean deletedAt =false;
     private LocalDate deleteDate;
 }

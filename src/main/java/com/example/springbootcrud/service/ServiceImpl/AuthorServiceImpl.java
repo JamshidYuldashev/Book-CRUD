@@ -28,7 +28,7 @@ public class AuthorServiceImpl implements AuthorService {
 
         entity.setCountry(dto.getCountry());
         entity.setAuthorName(dto.getAuthorName());
-        entity.setDelete(false);
+        entity.setDeletedAt(false);
         auhtorRepository.save(entity);
         BeanUtils.copyProperties(entity, authorResponseDto);
         return authorResponseDto;
@@ -39,7 +39,7 @@ public class AuthorServiceImpl implements AuthorService {
         List<AuthorResponseDto> responseDtos = new ArrayList<>();
         authorEntities.forEach(authorEntity -> {
             AuthorResponseDto dto = new AuthorResponseDto();
-            if (authorEntity.getDelete().equals(false)){
+            if (authorEntity.getDeletedAt().equals(false)){
                 BeanUtils.copyProperties(authorEntity, dto);
                 responseDtos.add(dto);
             }
@@ -65,7 +65,7 @@ public class AuthorServiceImpl implements AuthorService {
         if (optional.isEmpty()){
             return ResponseEntity.ok(new NullPointerException());
         }
-        optional.get().setDelete(true);
+        optional.get().setDeletedAt(true);
         optional.get().setDeleteDate(LocalDate.now());
         auhtorRepository.save(optional.get());
         return ResponseEntity.ok("Deleted id: " + id);

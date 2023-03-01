@@ -3,6 +3,10 @@ package com.example.springbootcrud.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.time.LocalDate;
+import java.util.List;
+
 @Entity
 @Getter
 @Setter
@@ -17,8 +21,10 @@ public class BookEntity {
     @ManyToOne
     @JoinColumn(name="author_id")
     private AuthorEntity authorEntity;
+
     private String bookName;
     private String publish;
     private int price;
-
+    private Boolean deletedAt =false;
+    private LocalDate deleteDate;
 }
