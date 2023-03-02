@@ -3,6 +3,7 @@ package com.example.springbootcrud.book.service;
 import com.example.springbootcrud.book.controller.repository.AuhtorRepository;
 import com.example.springbootcrud.book.dto.BookCreateDto;
 import com.example.springbootcrud.book.dto.BookMapper;
+import com.example.springbootcrud.book.dto.BookPartialDto;
 import com.example.springbootcrud.book.dto.BookResponseDto;
 import com.example.springbootcrud.book.entity.BookEntity;
 import com.example.springbootcrud.book.repository.BookRepository;
@@ -23,11 +24,11 @@ public class BookServiceImpl implements BooksService {
     @Autowired
     private AuhtorRepository auhtorRepository;
     @Autowired
-    private BookMapper mapper;
+    private BookMapper bookMapper;
 
     @Override
     public ResponseEntity<?> createBook(BookCreateDto dto) {
-        return ResponseEntity.ok(mapper.bookEntityToResponseDto(mapper.bookCreateDtoToEntity(dto)));
+        return ResponseEntity.ok(bookMapper.bookEntityToResponseDto(bookMapper.bookCreateDtoToEntity(dto)));
     }
 
     @Override
@@ -36,7 +37,7 @@ public class BookServiceImpl implements BooksService {
         List<BookResponseDto> responseDtos = new ArrayList<>();
         bookEntities.forEach(bookEntity -> {
             if (bookEntity.getDeletedAt().equals(false))
-                responseDtos.add(mapper.bookEntityToResponseDto(bookEntity));
+                responseDtos.add(bookMapper.bookEntityToResponseDto(bookEntity));
         });
         return ResponseEntity.ok(responseDtos);
     }
@@ -50,5 +51,15 @@ public class BookServiceImpl implements BooksService {
         optional.get().setDeleteDate(LocalDate.now());
         bookRepository.save(optional.get());
         return ResponseEntity.ok("Deleted id: " + id);
+    }
+
+    @Override
+    public ResponseEntity<?> updatePartialBookEntity(Long id, BookPartialDto partialDto) {
+        Optional<BookEntity> optional = bookRepository.findById(id);
+        if (optional.isEmpty())
+            return ResponseEntity.ok("This User not found!");
+        optional.get().setBookName(partialDto.getBookName());
+        optional.get().setPrice(partialDto.getPrice());
+        return ResponseEntity.ok(bookRepository.save(optional.get()));
     }
 }

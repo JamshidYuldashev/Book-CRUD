@@ -16,4 +16,5 @@ public interface AuthorService {
 
     ResponseEntity<?> getAuthId(long id);
 
+    ResponseEntity<?> updatePartialAuthorEntity(Long id, String country);
 }

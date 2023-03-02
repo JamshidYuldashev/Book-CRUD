@@ -1,6 +1,8 @@
 package com.example.springbootcrud.book.controller;
 
+import com.example.springbootcrud.Author.entity.AuthorEntity;
 import com.example.springbootcrud.book.dto.BookCreateDto;
+import com.example.springbootcrud.book.dto.BookPartialDto;
 import com.example.springbootcrud.book.entity.BookEntity;
 import com.example.springbootcrud.book.service.BooksService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -66,4 +68,17 @@ public class BooksController {
         return ResponseEntity.ok(booksService.delete(id));
     }
 
+    @Operation(summary = "Update a Book by its id partial")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Found Book and partial updated",
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = AuthorEntity.class)) }),
+            @ApiResponse(responseCode = "400", description = "Bad request",
+                    content = @Content(mediaType = MediaType.ALL_VALUE)),
+            @ApiResponse(responseCode = "404", description = "Author not found",
+                    content = @Content(mediaType = MediaType.ALL_VALUE)) })
+    @PatchMapping("/update/{id}")
+    public ResponseEntity<?> updatePartialAuthorEntity(@PathVariable Long id, BookPartialDto partialDto){
+        return ResponseEntity.ok(booksService.updatePartialBookEntity(id, partialDto));
+    }
 }

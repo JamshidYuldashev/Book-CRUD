@@ -4,7 +4,6 @@ import com.example.springbootcrud.Author.dto.AuthorCreateDto;
 import com.example.springbootcrud.Author.dto.AuthorResponseDto;
 import com.example.springbootcrud.Author.entity.AuthorEntity;
 import com.example.springbootcrud.Author.service.AuthorService;
-import com.example.springbootcrud.book.entity.BookEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -120,4 +119,21 @@ public class AuthorController {
             @PathVariable long id){
         return ResponseEntity.ok(authorService.getAuthId(id));
     }
+
+
+    // https://techwithmaddy.com/difference-between-put-and-patch-request-in-spring-boot
+    @Operation(summary = "Update a author by its id partial")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Found author and partial Updated",
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = AuthorEntity.class)) }),
+            @ApiResponse(responseCode = "400", description = "Bad request",
+                    content = @Content(mediaType = MediaType.ALL_VALUE)),
+            @ApiResponse(responseCode = "404", description = "Author not found",
+                    content = @Content(mediaType = MediaType.ALL_VALUE)) })
+    @PatchMapping("/update/{id}/{country}")
+    public ResponseEntity<?> updatePartialAuthorEntity(@PathVariable Long id, @PathVariable String country){
+        return ResponseEntity.ok(authorService.updatePartialAuthorEntity(id, country));
+    }
+
 }

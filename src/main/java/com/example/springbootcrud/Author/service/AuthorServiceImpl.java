@@ -96,4 +96,14 @@ public class AuthorServiceImpl implements AuthorService {
 
         return ResponseEntity.ok(authorMapper.authorEntityToResponseDto(optional.get()));
     }
+
+    @Override
+    public ResponseEntity<?> updatePartialAuthorEntity(Long id, String country) {
+        Optional<AuthorEntity> authorEntity = auhtorRepository.findById(id);
+        if (authorEntity.isEmpty()) {
+            return ResponseEntity.ok("This User not found");
+        }
+        authorEntity.get().setCountry(country);
+        return ResponseEntity.ok(auhtorRepository.save(authorEntity.get()));
+    }
 }
