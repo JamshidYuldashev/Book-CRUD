@@ -91,6 +91,9 @@ public class AuthorServiceImpl implements AuthorService {
         Optional<AuthorEntity> optional = auhtorRepository.findById(id);
         if (optional.isEmpty())
             return ResponseEntity.ok("This User not found");
+        if (optional.get().getDeletedAt().equals(true))
+            return ResponseEntity.ok("This User deleted");
+
         return ResponseEntity.ok(authorMapper.authorEntityToResponseDto(optional.get()));
     }
 }
