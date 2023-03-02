@@ -2,10 +2,10 @@ package com.example.springbootcrud.book.service;
 
 import com.example.springbootcrud.Author.repository.AuhtorRepository;
 import com.example.springbootcrud.book.dto.BookCreateDto;
+import com.example.springbootcrud.book.dto.BookMapper;
 import com.example.springbootcrud.book.dto.BookResponseDto;
 import com.example.springbootcrud.book.entity.BookEntity;
 import com.example.springbootcrud.book.repository.BookRepository;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -19,31 +19,15 @@ import java.util.Optional;
 public class BookServiceImpl implements BooksService {
     @Autowired
     private BookRepository bookRepository;
+
     @Autowired
     private AuhtorRepository auhtorRepository;
+    @Autowired
+    private BookMapper mapper;
 
     @Override
     public ResponseEntity<?> createBook(BookCreateDto dto) {
-        BookResponseDto bookResponseDto = new BookResponseDto();
-//        Optional<AuthorEntity> optional = auhtorRepository.findById(dto.getAuthorId());
-//        if (optional.isEmpty()){
-//            return ResponseEntity.ok("This User not found!");
-//        }
-//        if (optional.get().getDeletedAt().equals(true)){
-//            return ResponseEntity.ok("This Id: [" + dto.getAuthorId() +"] is disabled ");
-//        }
-
-        BookEntity bookEntity = new BookEntity();
-//        bookEntity.setAuthorEntity(optional.get());
-//        bookEntity.setAuthorId(dto.getAuthorId());
-        bookEntity.setBookName(dto.getBookName());
-        bookEntity.setPublish(dto.getPublish());
-        bookEntity.setPrice(dto.getPrice());
-        bookEntity.setDeletedAt(false);
-
-        bookRepository.save(bookEntity);
-        BeanUtils.copyProperties(bookEntity, bookResponseDto);
-        return ResponseEntity.ok(bookResponseDto);
+        return ResponseEntity.ok(mapper.bookEntityToResponseDto(mapper.bookCreateDtoToEntity(dto)));
     }
 
     @Override
@@ -51,11 +35,8 @@ public class BookServiceImpl implements BooksService {
         List<BookEntity> bookEntities = bookRepository.findAll();
         List<BookResponseDto> responseDtos = new ArrayList<>();
         bookEntities.forEach(bookEntity -> {
-            BookResponseDto dto = new BookResponseDto();
-            if (bookEntity.getDeletedAt().equals(false)){
-                BeanUtils.copyProperties(bookEntity, dto);
-                responseDtos.add(dto);
-            }
+            if (bookEntity.getDeletedAt().equals(false))
+                responseDtos.add(mapper.bookEntityToResponseDto(bookEntity));
         });
         return ResponseEntity.ok(responseDtos);
     }

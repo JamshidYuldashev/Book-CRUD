@@ -1,12 +1,12 @@
 package com.example.springbootcrud.Author.service;
 
+import com.example.springbootcrud.Author.dto.AuthorCreateDto;
+import com.example.springbootcrud.Author.dto.AuthorMapper;
 import com.example.springbootcrud.Author.dto.AuthorResponseDto;
-import com.example.springbootcrud.Author.dto.createDto.AuthorCreateDto;
 import com.example.springbootcrud.Author.entity.AuthorEntity;
 import com.example.springbootcrud.Author.repository.AuhtorRepository;
 import com.example.springbootcrud.book.entity.BookEntity;
 import com.example.springbootcrud.book.repository.BookRepository;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -23,30 +23,22 @@ public class AuthorServiceImpl implements AuthorService {
     private AuhtorRepository auhtorRepository;
 
     @Autowired
+    private AuthorMapper authorMapper;
+
+    @Autowired
     private BookRepository bookRepository;
 
     @Override
-    public AuthorResponseDto createAuthor(AuthorCreateDto dto) {
-        AuthorResponseDto authorResponseDto = new AuthorResponseDto();
-
-        AuthorEntity entity = new AuthorEntity();
-
-        entity.setCountry(dto.getCountry());
-        entity.setAuthorName(dto.getAuthorName());
-        entity.setDeletedAt(false);
-        auhtorRepository.save(entity);
-        BeanUtils.copyProperties(entity, authorResponseDto);
-        return authorResponseDto;
+    public ResponseEntity<?> createAuthor(AuthorCreateDto dto) {
+        return ResponseEntity.ok(authorMapper.authorEntityToResponseDto(authorMapper.authorCreateDtoToEntity(dto)));
     }
     @Override
     public ResponseEntity<?> getAll() {
         List<AuthorEntity> authorEntities=auhtorRepository.findAll();
         List<AuthorResponseDto> responseDtos = new ArrayList<>();
-        authorEntities.forEach(authorEntity -> {
-            AuthorResponseDto dto = new AuthorResponseDto();
+        authorEntities.forEach(authorEntity -> {;
             if (authorEntity.getDeletedAt().equals(false)){
-                BeanUtils.copyProperties(authorEntity, dto);
-                responseDtos.add(dto);
+                responseDtos.add(authorMapper.authorEntityToResponseDto(authorEntity));
             }
         });
         return ResponseEntity.ok(responseDtos);
@@ -88,24 +80,17 @@ public class AuthorServiceImpl implements AuthorService {
             bookEntitySet = optionalAuthorEntity.get().getBookAuthor();
             bookEntitySet.add(optionalBookEntity.get());
 
-
             auhtorRepository.save(optionalAuthorEntity.get());
         }
 
-        AuthorResponseDto responseDto = new AuthorResponseDto();
-        BeanUtils.copyProperties(optionalAuthorEntity.get(), responseDto);
-
-        return ResponseEntity.ok(responseDto);
+        return ResponseEntity.ok(authorMapper.authorEntityToResponseDto(optionalAuthorEntity.get()));
     }
 
     @Override
     public ResponseEntity<?> getAuthId(long id) {
-        Optional<AuthorEntity> optionalAuthorEntity = auhtorRepository.findById(id);
-        if (optionalAuthorEntity.isEmpty())
+        Optional<AuthorEntity> optional = auhtorRepository.findById(id);
+        if (optional.isEmpty())
             return ResponseEntity.ok("This User not found");
-        AuthorResponseDto authorResponseDto = new AuthorResponseDto();
-        BeanUtils.copyProperties(optionalAuthorEntity.get(), authorResponseDto);
-
-        return ResponseEntity.ok(authorResponseDto);
+        return ResponseEntity.ok(authorMapper.authorEntityToResponseDto(optional.get()));
     }
 }

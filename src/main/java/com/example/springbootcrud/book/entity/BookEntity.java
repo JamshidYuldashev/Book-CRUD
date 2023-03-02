@@ -19,16 +19,10 @@ public class BookEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
 
-//    @Column(name = "author_Id", insertable = false, updatable = false)
-//    private Long authorId;
-//    @ManyToOne
-//    @JoinColumn(name="author_id")
-//    private AuthorEntity authorEntity;
-
     private String bookName;
     private String publish;
     private int price;
-    private Boolean deletedAt =false;
+    private Boolean deletedAt = false;
     private LocalDate deleteDate;
 
     @JsonIgnore

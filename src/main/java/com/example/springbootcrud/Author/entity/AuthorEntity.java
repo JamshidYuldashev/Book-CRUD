@@ -17,8 +17,6 @@ public class AuthorEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
 
-//    @OneToMany(mappedBy = "authorEntity")
-//    private Set<BookEntity> bookEntities;
     private String country;
     private String authorName;
     private Boolean deletedAt =false;
