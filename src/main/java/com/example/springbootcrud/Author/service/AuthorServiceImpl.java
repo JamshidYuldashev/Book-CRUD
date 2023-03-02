@@ -4,7 +4,7 @@ import com.example.springbootcrud.Author.dto.AuthorCreateDto;
 import com.example.springbootcrud.Author.dto.AuthorMapper;
 import com.example.springbootcrud.Author.dto.AuthorResponseDto;
 import com.example.springbootcrud.Author.entity.AuthorEntity;
-import com.example.springbootcrud.Author.repository.AuhtorRepository;
+import com.example.springbootcrud.book.controller.repository.AuhtorRepository;
 import com.example.springbootcrud.book.entity.BookEntity;
 import com.example.springbootcrud.book.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,7 +1,7 @@
 package com.example.springbootcrud.Author.dto;
 
 import com.example.springbootcrud.Author.entity.AuthorEntity;
-import com.example.springbootcrud.Author.repository.AuhtorRepository;
+import com.example.springbootcrud.book.controller.repository.AuhtorRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

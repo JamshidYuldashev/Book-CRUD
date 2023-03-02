@@ -2,6 +2,7 @@ package com.example.springbootcrud.Author.controller;
 
 import com.example.springbootcrud.Author.dto.AuthorCreateDto;
 import com.example.springbootcrud.Author.dto.AuthorResponseDto;
+import com.example.springbootcrud.Author.entity.AuthorEntity;
 import com.example.springbootcrud.Author.service.AuthorService;
 import com.example.springbootcrud.book.entity.BookEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -12,6 +13,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,13 +28,13 @@ public class AuthorController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Add Author",
                     content = { @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = BookEntity.class)) }),
+                            schema = @Schema(implementation = AuthorEntity.class)) }),
             @ApiResponse(responseCode = "400", description = "Bad request",
-                    content = @Content),
+                    content = @Content(mediaType = MediaType.ALL_VALUE)),
             @ApiResponse(responseCode = "404", description = "Author not found",
-                    content = @Content),
+                    content = @Content(mediaType = MediaType.ALL_VALUE)),
             @ApiResponse(responseCode = "500", description = "Internal server error",
-                    content = @Content)})
+                    content = @Content(mediaType = MediaType.ALL_VALUE))})
     @PostMapping("/create_author")
     public ResponseEntity<?> addAuthor(@RequestBody  AuthorCreateDto dto){
         return ResponseEntity.ok(authorService.createAuthor(dto));
@@ -41,11 +44,11 @@ public class AuthorController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Found authors",
                     content = { @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = BookEntity.class)) }),
+                            schema = @Schema(implementation = AuthorEntity.class)) }),
             @ApiResponse(responseCode = "400", description = "Bad request",
-                    content = @Content),
+                    content =@Content(mediaType = MediaType.ALL_VALUE)),
             @ApiResponse(responseCode = "404", description = "Auhtors not found",
-                    content = @Content) })
+                    content = @Content(mediaType = MediaType.ALL_VALUE)) })
     @GetMapping("/all_author")
     public ResponseEntity<?> getAll(){
         return ResponseEntity.ok(authorService.getAll());
@@ -55,12 +58,13 @@ public class AuthorController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Found author",
                     content = { @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = BookEntity.class)) }),
+                            schema = @Schema(implementation = AuthorEntity.class)) }),
             @ApiResponse(responseCode = "400", description = "Bad request",
-                    content = @Content),
+                    content = @Content(mediaType = MediaType.ALL_VALUE)),
             @ApiResponse(responseCode = "404", description = "Author not found",
-                    content = @Content) })
+                    content = @Content(mediaType = MediaType.ALL_VALUE)) })
     @PutMapping("/update")
+    @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<?> update(@RequestBody AuthorResponseDto responseDto){
         return ResponseEntity.ok(authorService.update(responseDto));
     }
@@ -69,11 +73,11 @@ public class AuthorController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Deleted the author",
                     content = { @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = BookEntity.class)) }),
+                            schema = @Schema(implementation = AuthorEntity.class)) }),
             @ApiResponse(responseCode = "400", description = "Invalid id supplied",
-                    content = @Content),
+                    content = @Content(mediaType = MediaType.ALL_VALUE)),
             @ApiResponse(responseCode = "404", description = "Author not found",
-                    content = @Content) })
+                    content = @Content(mediaType = MediaType.ALL_VALUE)) })
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deteleAuthor(
             @Parameter(description = "id of author to be searched")
@@ -86,11 +90,11 @@ public class AuthorController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Success !",
                     content = { @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = BookEntity.class)) }),
+                            schema = @Schema(implementation = AuthorEntity.class)) }),
             @ApiResponse(responseCode = "400", description = "Invalid id supplied",
-                    content = @Content),
+                    content = @Content(mediaType = MediaType.ALL_VALUE)),
             @ApiResponse(responseCode = "404", description = "Author or Book not found",
-                    content = @Content) })
+                    content = @Content(mediaType = MediaType.ALL_VALUE)) })
     @JsonIgnore
     @PutMapping(("/{authID}/book/{bookID}"))
     public ResponseEntity<?>  addManyToMany(
@@ -105,11 +109,11 @@ public class AuthorController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Found authors",
                     content = { @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = BookEntity.class)) }),
+                            schema = @Schema(implementation = AuthorEntity.class)) }),
             @ApiResponse(responseCode = "400", description = "Invalid id supplied",
-                    content = @Content),
+                    content = @Content(mediaType = MediaType.ALL_VALUE)),
             @ApiResponse(responseCode = "404", description = "Auhtors not found",
-                    content = @Content) })
+                    content = @Content(mediaType = MediaType.ALL_VALUE)) })
     @GetMapping("/{id}")
     public ResponseEntity<?> getAuthId(
             @Parameter(description = "id of author to be searched")
