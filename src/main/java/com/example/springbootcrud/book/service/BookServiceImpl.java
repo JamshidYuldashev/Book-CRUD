@@ -1,6 +1,6 @@
 package com.example.springbootcrud.book.service;
 
-import com.example.springbootcrud.book.controller.repository.AuhtorRepository;
+import com.example.springbootcrud.Author.repository.AuthorRepository;
 import com.example.springbootcrud.book.dto.BookCreateDto;
 import com.example.springbootcrud.book.dto.BookMapper;
 import com.example.springbootcrud.book.dto.BookPartialDto;
@@ -22,7 +22,7 @@ public class BookServiceImpl implements BooksService {
     private BookRepository bookRepository;
 
     @Autowired
-    private AuhtorRepository auhtorRepository;
+    private AuthorRepository authorRepository;
     @Autowired
     private BookMapper bookMapper;
 

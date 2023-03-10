@@ -1,7 +1,7 @@
 package com.example.springbootcrud.Author.dto;
 
 import com.example.springbootcrud.Author.entity.AuthorEntity;
-import com.example.springbootcrud.book.controller.repository.AuhtorRepository;
+import com.example.springbootcrud.Author.repository.AuthorRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -11,7 +11,7 @@ import java.util.HashSet;
 @Component
 public class AuthorMapper {
     @Autowired
-    private AuhtorRepository auhtorRepository;
+    private AuthorRepository authorRepository;
     private final ModelMapper mapper;
 
     public AuthorMapper() {
@@ -34,7 +34,7 @@ public class AuthorMapper {
         authorEntity.setCountry(dto.getCountry());
         authorEntity.setAuthorName(dto.getAuthorName());
         authorEntity.setDeletedAt(false);
-        return auhtorRepository.save(authorEntity);
+        return authorRepository.save(authorEntity);
     }
 
 }

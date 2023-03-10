@@ -78,7 +78,7 @@ public class AuthorController {
             @ApiResponse(responseCode = "404", description = "Author not found",
                     content = @Content(mediaType = MediaType.ALL_VALUE)) })
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> deteleAuthor(
+    public ResponseEntity<?> deleteAuthor(
             @Parameter(description = "id of author to be searched")
             @PathVariable long id){
         return ResponseEntity.ok(authorService.delete(id));

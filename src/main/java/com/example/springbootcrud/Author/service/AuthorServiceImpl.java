@@ -4,7 +4,7 @@ import com.example.springbootcrud.Author.dto.AuthorCreateDto;
 import com.example.springbootcrud.Author.dto.AuthorMapper;
 import com.example.springbootcrud.Author.dto.AuthorResponseDto;
 import com.example.springbootcrud.Author.entity.AuthorEntity;
-import com.example.springbootcrud.book.controller.repository.AuhtorRepository;
+import com.example.springbootcrud.Author.repository.AuthorRepository;
 import com.example.springbootcrud.book.entity.BookEntity;
 import com.example.springbootcrud.book.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +20,7 @@ import java.util.Set;
 @Service
 public class AuthorServiceImpl implements AuthorService {
     @Autowired
-    private AuhtorRepository auhtorRepository;
+    private AuthorRepository authorRepository;
 
     @Autowired
     private AuthorMapper authorMapper;
@@ -34,7 +34,7 @@ public class AuthorServiceImpl implements AuthorService {
     }
     @Override
     public ResponseEntity<?> getAll() {
-        List<AuthorEntity> authorEntities=auhtorRepository.findAll();
+        List<AuthorEntity> authorEntities= authorRepository.findAll();
         List<AuthorResponseDto> responseDtos = new ArrayList<>();
         authorEntities.forEach(authorEntity -> {;
             if (authorEntity.getDeletedAt().equals(false)){
@@ -46,32 +46,32 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     public ResponseEntity<?> update(AuthorResponseDto responseDto) {
-        Optional<AuthorEntity> authorEntity = auhtorRepository.findById(responseDto.getId());
+        Optional<AuthorEntity> authorEntity = authorRepository.findById(responseDto.getId());
         if (authorEntity.isEmpty()) {
             return ResponseEntity.ok("This User not found");
         }
         authorEntity.get().setAuthorName(responseDto.getAuthorName());
         authorEntity.get().setCountry(responseDto.getCountry());
-        auhtorRepository.save(authorEntity.get());
+        authorRepository.save(authorEntity.get());
         return ResponseEntity.ok(responseDto);
     }
 
     @Override
     public ResponseEntity<?> delete(Long id) {
-        Optional<AuthorEntity> optional = auhtorRepository.findById(id);
+        Optional<AuthorEntity> optional = authorRepository.findById(id);
         if (optional.isEmpty()){
             return ResponseEntity.ok("This User not found");
         }
         optional.get().setDeletedAt(true);
         optional.get().setDeleteDate(LocalDate.now());
-        auhtorRepository.save(optional.get());
+        authorRepository.save(optional.get());
         return ResponseEntity.ok("Deleted id: " + id);
     }
 
     @Override
     public ResponseEntity<?> addManyToMany(Long authID, Long bookID) {
         Set<BookEntity> bookEntitySet = null;
-        Optional<AuthorEntity> optionalAuthorEntity = auhtorRepository.findById(authID);
+        Optional<AuthorEntity> optionalAuthorEntity = authorRepository.findById(authID);
         Optional<BookEntity> optionalBookEntity = bookRepository.findById(bookID);
 
         if (optionalAuthorEntity.get().getDeletedAt().equals(false) &&
@@ -80,7 +80,7 @@ public class AuthorServiceImpl implements AuthorService {
             bookEntitySet = optionalAuthorEntity.get().getBookAuthor();
             bookEntitySet.add(optionalBookEntity.get());
 
-            auhtorRepository.save(optionalAuthorEntity.get());
+            authorRepository.save(optionalAuthorEntity.get());
         }
 
         return ResponseEntity.ok(authorMapper.authorEntityToResponseDto(optionalAuthorEntity.get()));
@@ -88,7 +88,7 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     public ResponseEntity<?> getAuthId(long id) {
-        Optional<AuthorEntity> optional = auhtorRepository.findById(id);
+        Optional<AuthorEntity> optional = authorRepository.findById(id);
         if (optional.isEmpty())
             return ResponseEntity.ok("This User not found");
         if (optional.get().getDeletedAt().equals(true))
@@ -99,11 +99,11 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     public ResponseEntity<?> updatePartialAuthorEntity(Long id, String country) {
-        Optional<AuthorEntity> authorEntity = auhtorRepository.findById(id);
+        Optional<AuthorEntity> authorEntity = authorRepository.findById(id);
         if (authorEntity.isEmpty()) {
             return ResponseEntity.ok("This User not found");
         }
         authorEntity.get().setCountry(country);
-        return ResponseEntity.ok(auhtorRepository.save(authorEntity.get()));
+        return ResponseEntity.ok(authorRepository.save(authorEntity.get()));
     }
 }
