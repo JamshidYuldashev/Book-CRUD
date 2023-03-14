@@ -4,6 +4,7 @@ import com.example.springbootcrud.book.entity.BookEntity;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -18,6 +19,9 @@ public class AuthorResponseDto {
 
     @Schema(description = "Author's Name", example = "John Doe")
     private String authorName;
+
+    @Schema(description = "Date of Created", example = "2023-03-01")
+    private LocalDate createdDate;
 
     @Schema(description = "Book class")
     private Set<BookEntity> bookAuthor = new HashSet<>();

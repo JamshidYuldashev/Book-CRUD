@@ -26,6 +26,8 @@ public class AuthorEntity {
     private String authorName;
     @Schema(description = "If 'true', the Auhtor is disabled or Active ")
     private Boolean deletedAt =false;
+    @Schema(description = "Date of Created", example = "2023-03-01")
+    private LocalDate createdDate;
     @Schema(description = "Date of Deleted", example = "2023-03-01")
     private LocalDate deleteDate;
 

@@ -30,18 +30,7 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     public ResponseEntity<?> createAuthor(AuthorCreateDto dto) {
-        return ResponseEntity.ok(authorMapper.authorEntityToResponseDto(authorMapper.authorCreateDtoToEntity(dto)));
-    }
-    @Override
-    public ResponseEntity<?> getAll() {
-        List<AuthorEntity> authorEntities= authorRepository.findAll();
-        List<AuthorResponseDto> responseDtos = new ArrayList<>();
-        authorEntities.forEach(authorEntity -> {;
-            if (authorEntity.getDeletedAt().equals(false)){
-                responseDtos.add(authorMapper.authorEntityToResponseDto(authorEntity));
-            }
-        });
-        return ResponseEntity.ok(responseDtos);
+        return ResponseEntity.ok(authorMapper.returnAuthorResponseDto(authorMapper.authorCreateDto_To_Entity(dto)));
     }
 
     @Override
@@ -83,7 +72,7 @@ public class AuthorServiceImpl implements AuthorService {
             authorRepository.save(optionalAuthorEntity.get());
         }
 
-        return ResponseEntity.ok(authorMapper.authorEntityToResponseDto(optionalAuthorEntity.get()));
+        return ResponseEntity.ok(authorMapper.returnAuthorsAndBooks(optionalAuthorEntity.get()));
     }
 
     @Override
@@ -94,7 +83,7 @@ public class AuthorServiceImpl implements AuthorService {
         if (optional.get().getDeletedAt().equals(true))
             return ResponseEntity.ok("This User deleted");
 
-        return ResponseEntity.ok(authorMapper.authorEntityToResponseDto(optional.get()));
+        return ResponseEntity.ok(authorMapper.returnAuthorResponseDto(optional.get()));
     }
 
     @Override
@@ -105,5 +94,27 @@ public class AuthorServiceImpl implements AuthorService {
         }
         authorEntity.get().setCountry(country);
         return ResponseEntity.ok(authorRepository.save(authorEntity.get()));
+    }
+
+    @Override
+    public List<AuthorResponseDto> getAllAuthorsWithBooks() {
+        List<AuthorEntity> authorEntities= authorRepository.findAll();
+        List<AuthorResponseDto> responseDto = new ArrayList<>();
+        authorEntities.forEach(authorEntity -> {
+            if (authorEntity.getDeletedAt().equals(false) && !authorEntity.getBookAuthor().isEmpty()){
+                responseDto.add(authorMapper.returnAuthorsAndBooks(authorEntity));
+            }
+        });
+        return responseDto;
+    }
+
+    @Override
+    public ResponseEntity<?> getAll() {
+        List<AuthorEntity> entityList = authorRepository.findAll();
+        List<AuthorResponseDto> responseDtoList = new ArrayList<>();
+        entityList.forEach(authorEntity -> {
+             responseDtoList.add(authorMapper.returnAuthorResponseDto(authorEntity));
+        });
+        return ResponseEntity.ok(responseDtoList);
     }
 }

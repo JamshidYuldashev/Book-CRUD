@@ -4,9 +4,10 @@ import com.example.springbootcrud.Author.dto.AuthorCreateDto;
 import com.example.springbootcrud.Author.dto.AuthorResponseDto;
 import org.springframework.http.ResponseEntity;
 
+import java.util.List;
+
 public interface AuthorService {
     ResponseEntity<?> createAuthor(AuthorCreateDto dto);
-    ResponseEntity<?> getAll();
 
     ResponseEntity<?> update(AuthorResponseDto responseDto);
 
@@ -17,4 +18,8 @@ public interface AuthorService {
     ResponseEntity<?> getAuthId(long id);
 
     ResponseEntity<?> updatePartialAuthorEntity(Long id, String country);
+
+    List<AuthorResponseDto> getAllAuthorsWithBooks();
+
+    ResponseEntity<?> getAll();
 }

@@ -17,6 +17,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/author")
 public class AuthorController {
@@ -39,16 +41,30 @@ public class AuthorController {
         return ResponseEntity.ok(authorService.createAuthor(dto));
     }
 
-    @Operation(summary = "Get all Auhtors")
+    @Operation(summary = "Get all Authors with Book")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Found authors",
                     content = { @Content(mediaType = "application/json",
                             schema = @Schema(implementation = AuthorEntity.class)) }),
             @ApiResponse(responseCode = "400", description = "Bad request",
                     content =@Content(mediaType = MediaType.ALL_VALUE)),
-            @ApiResponse(responseCode = "404", description = "Auhtors not found",
+            @ApiResponse(responseCode = "404", description = "Authors not found",
                     content = @Content(mediaType = MediaType.ALL_VALUE)) })
-    @GetMapping("/all_author")
+    @GetMapping("/authors_with_books")
+    public List<AuthorResponseDto> getAllAuthorsWithBooks(){
+        return authorService.getAllAuthorsWithBooks();
+    }
+
+    @Operation(summary = "Get all Authors")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Found authors",
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = AuthorEntity.class)) }),
+            @ApiResponse(responseCode = "400", description = "Bad request",
+                    content =@Content(mediaType = MediaType.ALL_VALUE)),
+            @ApiResponse(responseCode = "404", description = "Authors not found",
+                    content = @Content(mediaType = MediaType.ALL_VALUE)) })
+    @GetMapping("all_author")
     public ResponseEntity<?> getAll(){
         return ResponseEntity.ok(authorService.getAll());
     }
