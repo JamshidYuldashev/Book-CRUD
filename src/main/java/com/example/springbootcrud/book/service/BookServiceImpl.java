@@ -1,6 +1,6 @@
 package com.example.springbootcrud.book.service;
 
-import com.example.springbootcrud.Author.repository.AuthorRepository;
+import com.example.springbootcrud.author.repository.AuthorRepository;
 import com.example.springbootcrud.book.dto.BookCreateDto;
 import com.example.springbootcrud.book.dto.BookMapper;
 import com.example.springbootcrud.book.dto.BookPartialDto;

@@ -1,4 +1,4 @@
-package com.example.springbootcrud.Author.entity;
+package com.example.springbootcrud.author.entity;
 
 import com.example.springbootcrud.book.entity.BookEntity;
 import io.swagger.v3.oas.annotations.media.Schema;

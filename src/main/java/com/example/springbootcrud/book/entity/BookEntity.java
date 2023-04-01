@@ -1,6 +1,6 @@
 package com.example.springbootcrud.book.entity;
 
-import com.example.springbootcrud.Author.entity.AuthorEntity;
+import com.example.springbootcrud.author.entity.AuthorEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;

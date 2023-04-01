@@ -1,10 +1,10 @@
-package com.example.springbootcrud.Author.service;
+package com.example.springbootcrud.author.service;
 
-import com.example.springbootcrud.Author.dto.AuthorCreateDto;
-import com.example.springbootcrud.Author.dto.AuthorMapper;
-import com.example.springbootcrud.Author.dto.AuthorResponseDto;
-import com.example.springbootcrud.Author.entity.AuthorEntity;
-import com.example.springbootcrud.Author.repository.AuthorRepository;
+import com.example.springbootcrud.author.dto.AuthorCreateDto;
+import com.example.springbootcrud.author.dto.AuthorMapper;
+import com.example.springbootcrud.author.dto.AuthorResponseDto;
+import com.example.springbootcrud.author.entity.AuthorEntity;
+import com.example.springbootcrud.author.repository.AuthorRepository;
 import com.example.springbootcrud.book.entity.BookEntity;
 import com.example.springbootcrud.book.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;

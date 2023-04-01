@@ -1,7 +1,7 @@
-package com.example.springbootcrud.Author.service;
+package com.example.springbootcrud.author.service;
 
-import com.example.springbootcrud.Author.dto.AuthorCreateDto;
-import com.example.springbootcrud.Author.dto.AuthorResponseDto;
+import com.example.springbootcrud.author.dto.AuthorCreateDto;
+import com.example.springbootcrud.author.dto.AuthorResponseDto;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;

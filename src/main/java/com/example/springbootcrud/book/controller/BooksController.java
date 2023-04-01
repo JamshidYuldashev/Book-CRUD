@@ -1,6 +1,6 @@
 package com.example.springbootcrud.book.controller;
 
-import com.example.springbootcrud.Author.entity.AuthorEntity;
+import com.example.springbootcrud.author.entity.AuthorEntity;
 import com.example.springbootcrud.book.dto.BookCreateDto;
 import com.example.springbootcrud.book.dto.BookPartialDto;
 import com.example.springbootcrud.book.entity.BookEntity;

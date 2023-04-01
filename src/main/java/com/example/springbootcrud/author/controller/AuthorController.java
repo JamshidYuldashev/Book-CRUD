@@ -1,9 +1,9 @@
-package com.example.springbootcrud.Author.controller;
+package com.example.springbootcrud.author.controller;
 
-import com.example.springbootcrud.Author.dto.AuthorCreateDto;
-import com.example.springbootcrud.Author.dto.AuthorResponseDto;
-import com.example.springbootcrud.Author.entity.AuthorEntity;
-import com.example.springbootcrud.Author.service.AuthorService;
+import com.example.springbootcrud.author.dto.AuthorCreateDto;
+import com.example.springbootcrud.author.dto.AuthorResponseDto;
+import com.example.springbootcrud.author.entity.AuthorEntity;
+import com.example.springbootcrud.author.service.AuthorService;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
