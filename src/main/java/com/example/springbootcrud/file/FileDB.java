@@ -1,5 +1,6 @@
 package com.example.springbootcrud.file;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -9,9 +10,11 @@ public class FileDB {
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
+    @Schema(description = "File id", example = "0bfb3381-3cf6-4ca3-9435-89c7074fcbb9")
     private String id;
-
+    @Schema(description = "File name", example = "Employee")
     private String name;
+    @Schema(description = "File type", example = "image/jpeg")
     private String type;
 
     @Lob
