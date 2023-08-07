@@ -15,6 +15,9 @@ public class BookMapper {
     public BookMapper() {
         this.mapper = new ModelMapper();
     }
+    public void test(){
+
+    }
 
     public BookResponseDto bookEntityToResponseDto(BookEntity entity){
         BookResponseDto bookResponseDto = new BookResponseDto();
